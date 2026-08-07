@@ -3,8 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ExpertiseCategory extends Model
 {
-    //
+    protected $fillable = [
+        'name',
+        'description',
+        'is_active',
+    ];
+
+    protected function casts(): array
+    {
+        return [
+            'is_active' => 'boolean',
+        ];
+    }
+
+    public function experts(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Expert::class,
+            'expert_expertise'
+        );
+    }
 }
