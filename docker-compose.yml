@@ -63,6 +63,8 @@ services:
     environment:
       PMA_HOST: mysql
       PMA_PORT: 3306
+      PMA_USER: ${DB_USERNAME:-expert_hub}
+      PMA_PASSWORD: ${DB_PASSWORD:-expert_hub_secret}
       UPLOAD_LIMIT: 64M
     depends_on:
       mysql:
