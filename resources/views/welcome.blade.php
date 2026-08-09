@@ -25,7 +25,7 @@
     <h1>Expert-Hub</h1>
     <p>พื้นที่สำหรับสร้างและแบ่งปันความเชี่ยวชาญ ระบบ Laravel ทำงานผ่าน Docker พร้อม MySQL และ phpMyAdmin แล้ว</p>
     <dl>
-        <div><dt>Framework</dt><dd>Laravel 13</dd></div>
+        <div><dt>Framework</dt><dd>Laravel 12</dd></div>
         <div><dt>Runtime</dt><dd>PHP 8.3</dd></div>
         <div><dt>Database</dt><dd>MySQL 8.4</dd></div>
     </dl>
