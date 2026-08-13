@@ -4,41 +4,6 @@
 
 @section('content')
     <div class="mx-auto w-full max-w-6xl">
-        {{-- ปุ่มย้อนกลับ --}}
-        <div class="mb-5">
-            <a
-                href="{{ auth()->user()?->is_admin
-                    ? route('experts.index')
-                    : route('show-expert') }}"
-                class="
-                    inline-flex items-center gap-2 rounded-lg
-                    px-1 py-2 text-sm font-medium text-slate-500
-                    transition hover:text-blue-600
-                    focus:outline-none focus:ring-4
-                    focus:ring-blue-100
-                "
-            >
-                <svg
-                    class="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    aria-hidden="true"
-                >
-                    <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        d="m15 18-6-6 6-6"
-                    />
-                </svg>
-
-                {{ auth()->user()?->is_admin
-                    ? 'กลับหน้าจัดการ'
-                    : 'กลับหน้ารายชื่อผู้เชี่ยวชาญ' }}
-            </a>
-        </div>
-
         {{-- ส่วนหัว --}}
         <header
             class="
@@ -72,7 +37,7 @@
             <div
                 class="
                     relative flex flex-col gap-6
-                    sm:flex-row sm:items-end
+                    sm:flex-row sm:items-center
                     sm:justify-between
                 "
             >
@@ -164,15 +129,49 @@
                     </p>
                 </div>
 
-                {{-- ปุ่มจัดการสำหรับ Admin --}}
-                @auth
-                    @if (auth()->user()->is_admin)
-                        <div
-                            class="
-                                flex w-full shrink-0 flex-col gap-2
-                                sm:w-auto sm:flex-row
-                            "
+                {{-- ปุ่มย้อนกลับและปุ่มจัดการ --}}
+                <div
+                    class="
+                        flex w-full shrink-0 flex-col gap-2
+                        sm:w-auto sm:flex-row sm:flex-wrap
+                        sm:justify-end
+                    "
+                >
+                    <a
+                        href="{{ auth()->user()?->is_admin
+                            ? route('experts.index')
+                            : route('show-expert') }}"
+                        class="
+                            inline-flex h-11 items-center justify-center
+                            gap-2 rounded-xl border border-slate-300
+                            bg-white px-4 text-sm font-semibold
+                            text-slate-700 shadow-sm transition
+                            hover:border-slate-400 hover:bg-slate-50
+                            hover:text-slate-900 focus:outline-none
+                            focus:ring-4 focus:ring-blue-100
+                        "
+                        aria-label="ย้อนกลับ"
+                    >
+                        <svg
+                            class="h-5 w-5"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            aria-hidden="true"
                         >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="m15 18-6-6 6-6"
+                            />
+                        </svg>
+
+                        ย้อนกลับ
+                    </a>
+
+                    @auth
+                        @if (auth()->user()->is_admin)
                             <a
                                 href="{{ route('experts.edit', $expert) }}"
                                 class="
@@ -261,29 +260,27 @@
                                     ลบข้อมูล
                                 </button>
                             </form>
-                        </div>
-                    @endif
-                @endauth
+                        @endif
+                    @endauth
+                </div>
             </div>
         </header>
 
         {{-- รูปและข้อมูลทั่วไป --}}
         <div
             class="
-                grid items-stretch gap-6
-                lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]
-            "
-        >
+                grid items-start gap-6
+                lg:grid-cols-[280px_minmax(0,1fr)]
+                lg:items-stretch
+            ">
             {{-- รูปประจำตัว --}}
             <section
                 class="
-                    overflow-hidden rounded-3xl
+                    mx-auto w-full max-w-xs overflow-hidden rounded-3xl
                     border border-slate-200
-                    bg-white shadow-sm
-                "
-            >
+                    bg-white shadow-sm lg:mx-0 lg:h-full lg:max-w-none " >
                 @if ($expert->profile_image)
-                    <div class="aspect-[4/5] h-full min-h-[420px] w-full">
+                    <div class="aspect-[4/5] w-full lg:aspect-auto lg:h-full">
                         <img
                             src="{{ Storage::disk('public')->url(
                                 $expert->profile_image
@@ -295,7 +292,7 @@
                 @else
                     <div
                         class="
-                            flex h-full min-h-[420px] flex-col
+                            flex aspect-[4/5] flex-col
                             items-center justify-center
                             bg-gradient-to-br from-slate-50
                             to-slate-200 px-6 text-center

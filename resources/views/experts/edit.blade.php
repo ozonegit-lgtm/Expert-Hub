@@ -4,20 +4,40 @@
 
 @section('content')
     <div class="mx-auto w-full max-w-6xl">
-        {{-- ปุ่มย้อนกลับ --}}
-        <div class="mb-5">
+        {{-- หัวข้อและปุ่มย้อนกลับ --}}
+        <div class="mb-6 flex items-center justify-between gap-4">
+            <div class="min-w-0">
+                <h1
+                    class="
+                        text-2xl font-bold tracking-tight
+                        text-slate-900 sm:text-3xl
+                    "
+                >
+                    แก้ไขข้อมูลผู้เชี่ยวชาญ
+                </h1>
+
+                <p class="mt-1 truncate text-sm text-slate-500">
+                    {{ $expert->full_name }}
+                </p>
+            </div>
+
             <a
                 href="{{ route('experts.show', $expert) }}"
                 class="
-                    inline-flex items-center gap-2 rounded-lg
-                    px-1 py-2 text-sm font-medium text-slate-500
-                    transition hover:text-blue-600
+                    inline-flex h-11 shrink-0 items-center
+                    justify-center gap-2 rounded-xl
+                    border border-slate-300 bg-white px-4
+                    text-sm font-semibold text-slate-700
+                    shadow-sm transition
+                    hover:border-slate-400 hover:bg-slate-50
+                    hover:text-slate-900
                     focus:outline-none focus:ring-4
                     focus:ring-blue-100
                 "
+                aria-label="ย้อนกลับไปหน้ารายละเอียดผู้เชี่ยวชาญ"
             >
                 <svg
-                    class="h-4 w-4"
+                    class="h-5 w-5"
                     viewBox="0 0 24 24"
                     fill="none"
                     stroke="currentColor"
@@ -31,7 +51,7 @@
                     />
                 </svg>
 
-                กลับหน้ารายละเอียด
+                <span class="hidden sm:inline">ย้อนกลับ</span>
             </a>
         </div>
 
@@ -68,7 +88,7 @@
             <div
                 class="
                     relative flex flex-col gap-6
-                    sm:flex-row sm:items-end
+                    sm:flex-row sm:items-center
                     sm:justify-between
                 "
             >

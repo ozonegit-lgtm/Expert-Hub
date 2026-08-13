@@ -639,9 +639,30 @@
 
     {{-- การเผยแพร่ --}}
     <section>
-        <h2 class="text-lg font-bold text-slate-900">
-            สถานะข้อมูล
-        </h2>
+        <div class="flex items-center gap-3">
+            <span
+                class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-emerald-50 text-emerald-600"
+                aria-hidden="true"
+            >
+                <svg
+                    class="h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z M3.6 9h16.8 M3.6 15h16.8 M12 3c2.1 2.47 3.25 5.6 3.25 9S14.1 18.53 12 21c-2.1-2.47-3.25-5.6-3.25-9S9.9 5.47 12 3Z"
+                    />
+                </svg>
+            </span>
+
+            <h2 class="text-lg font-bold text-slate-900">
+                สถานะข้อมูล
+            </h2>
+        </div>
 
         <p class="mt-1 text-sm text-slate-500">
             กำหนดว่าข้อมูลจะแสดงในหน้าสาธารณะหรือไม่
@@ -666,7 +687,7 @@
                     @checked($publishedStatus === '1')
                 >
 
-                <span>
+                <span class="min-w-0 flex-1">
                     <span class="block font-semibold text-slate-900">
                         เผยแพร่ข้อมูล
                     </span>
@@ -675,6 +696,21 @@
                         ผู้เข้าชมสามารถค้นหาและเปิดดูข้อมูลนี้ได้
                     </span>
                 </span>
+
+                <svg
+                    class="mt-0.5 h-6 w-6 shrink-0 text-emerald-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    aria-hidden="true"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M2.25 12s3.5-6 9.75-6 9.75 6 9.75 6-3.5 6-9.75 6S2.25 12 2.25 12Z M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                </svg>
             </label>
 
             <label
@@ -695,7 +731,7 @@
                     @checked($publishedStatus === '0')
                 >
 
-                <span>
+                <span class="min-w-0 flex-1">
                     <span class="block font-semibold text-slate-900">
                         บันทึกข้อมูลแบบร่าง
                     </span>
@@ -704,6 +740,21 @@
                         เก็บข้อมูลไว้ในระบบ แต่ยังไม่แสดงต่อสาธารณะ
                     </span>
                 </span>
+
+                <svg
+                    class="mt-0.5 h-6 w-6 shrink-0 text-amber-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    aria-hidden="true"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M12 6v6l4 2 M21 12a9 9 0 1 1-9-9"
+                    />
+                </svg>
             </label>
         </div>
 
@@ -714,9 +765,31 @@
 
     {{-- การแสดงข้อมูลติดต่อ --}}
     <section>
-        <h2 class="text-lg font-bold text-slate-900">
-            การแสดงข้อมูลติดต่อ
-        </h2>
+        <div class="flex items-center gap-3">
+            <span
+                class="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-blue-50 text-blue-600"
+                aria-hidden="true"
+            >
+                <svg
+                    class="h-5 w-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                >
+                    <rect x="3" y="5" width="18" height="14" rx="2" />
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m4 7 8 6 8-6"
+                    />
+                </svg>
+            </span>
+
+            <h2 class="text-lg font-bold text-slate-900">
+                การแสดงข้อมูลติดต่อ
+            </h2>
+        </div>
 
         <p class="mt-1 text-sm text-slate-500">
             ควบคุมการแสดงโทรศัพท์ อีเมล และ LINE ID
@@ -741,7 +814,7 @@
                     @checked($contactVisibility === '1')
                 >
 
-                <span>
+                <span class="min-w-0 flex-1">
                     <span class="block font-semibold text-slate-900">
                         แสดงข้อมูลติดต่อ
                     </span>
@@ -750,6 +823,21 @@
                         ผู้เข้าชมสามารถเห็นข้อมูลติดต่อได้
                     </span>
                 </span>
+
+                <svg
+                    class="mt-0.5 h-6 w-6 shrink-0 text-blue-500"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    aria-hidden="true"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M2.25 12s3.5-6 9.75-6 9.75 6 9.75 6-3.5 6-9.75 6S2.25 12 2.25 12Z M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                    />
+                </svg>
             </label>
 
             <label
@@ -770,7 +858,7 @@
                     @checked($contactVisibility === '0')
                 >
 
-                <span>
+                <span class="min-w-0 flex-1">
                     <span class="block font-semibold text-slate-900">
                         ซ่อนข้อมูลติดต่อ
                     </span>
@@ -779,6 +867,21 @@
                         ข้อมูลยังถูกบันทึก แต่ไม่แสดงต่อผู้เข้าชม
                     </span>
                 </span>
+
+                <svg
+                    class="mt-0.5 h-6 w-6 shrink-0 text-slate-400"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    aria-hidden="true"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="m3 3 18 18 M10.6 10.7A2 2 0 0 0 13.3 13.4 M9.9 5.2A10.9 10.9 0 0 1 12 5c6.25 0 9.75 7 9.75 7a15.5 15.5 0 0 1-2.4 3.3 M6.2 6.2C3.65 8.1 2.25 12 2.25 12s3.5 7 9.75 7c1.25 0 2.4-.28 3.45-.73"
+                    />
+                </svg>
             </label>
         </div>
 
@@ -803,6 +906,21 @@
                 transition hover:bg-slate-50
             "
         >
+            <svg
+                class="mr-2 h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m15 18-6-6 6-6"
+                />
+            </svg>
+
             ยกเลิก
         </a>
 
@@ -816,6 +934,21 @@
                 focus:ring-4 focus:ring-blue-200
             "
         >
+            <svg
+                class="mr-2 h-4 w-4"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                aria-hidden="true"
+            >
+                <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M5 12.5 9.5 17 19 7.5"
+                />
+            </svg>
+
             {{ $submitLabel }}
         </button>
     </div>

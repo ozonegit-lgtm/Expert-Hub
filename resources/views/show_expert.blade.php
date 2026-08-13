@@ -3,22 +3,82 @@
 @section('title', 'ผู้เชี่ยวชาญทั้งหมด')
 
 @section('content')
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold tracking-tight text-slate-900">
-            ผู้เชี่ยวชาญทั้งหมด
-        </h1>
+    <div
+            class="
+                relative left-1/2 -mt-9 mb-8 flex min-h-[280px] w-screen
+                -translate-x-1/2 overflow-hidden
+                border-y border-white/10 bg-[#2D2AFF]
+                px-6 py-10 text-white
+                shadow-[inset_0_-40px_80px_rgba(0,0,80,0.12),0_12px_30px_rgba(15,23,42,0.12)]
+                sm:min-h-[340px] sm:px-10 sm:py-12
+            ">
+        {{-- วงกลมตกแต่งมุมขวาบน --}}
+        <div
+            class="
+                pointer-events-none absolute -right-24 -top-32
+                h-80 w-80 rounded-full border-[18px]
+                border-white/15
+            "
+            aria-hidden="true"
+        ></div>
 
-        <p class="mt-2 text-slate-500">
-            รายชื่อผู้เชี่ยวชาญที่เผยแพร่ในระบบ
-        </p>
+        <div
+            class="
+                pointer-events-none absolute -right-12 -top-16
+                h-44 w-44 rounded-full bg-indigo-950/10
+            "
+            aria-hidden="true"
+        ></div>
+
+        {{-- วงกลมตกแต่งมุมซ้ายล่าง --}}
+        <div
+            class="
+                pointer-events-none absolute -bottom-28 -left-24
+                h-64 w-64 rounded-full bg-sky-300/20
+            "
+            aria-hidden="true"
+        ></div>
+
+        <div
+            class="
+                relative z-10 flex w-full flex-col
+                items-center justify-center text-center
+            "
+        >
+            <h1
+                class="
+                    max-w-4xl text-3xl font-extrabold
+                    tracking-tight text-white
+                    drop-shadow-sm sm:text-5xl sm:leading-tight
+                "
+            >
+                ค้นหาผู้เชี่ยวชาญที่ใช่สำหรับคุณ
+            </h1>
+
+            <nav
+                class="mt-auto pt-12 text-sm font-medium text-white sm:text-base"
+                aria-label="Breadcrumb"
+            >
+                <a
+                    href="{{ url('/') }}"
+                    class="transition hover:text-blue-200"
+                >
+                    หน้าหลัก
+                </a>
+
+                <span class="mx-2 text-white/70" aria-hidden="true">»</span>
+
+                <span>ผู้เชี่ยวชาญทั้งหมด</span>
+            </nav>
+        </div>
     </div>
     {{-- แถบค้นหาและกรองข้อมูล --}}
     <form
         method="GET"
         action="{{ route('show-expert') }}"
         class="
-            mb-8 rounded-2xl border border-slate-200
-            bg-white p-3 shadow-sm sm:p-4
+            relative z-10 mb-8 rounded-2xl border border-slate-200/80
+            bg-white p-3 shadow-lg shadow-slate-200/50 sm:p-4
         "
     >
         <div
@@ -62,7 +122,7 @@
                         placeholder="ค้นหาชื่อ ตำแหน่ง สถานที่ หรือความเชี่ยวชาญ"
                         class="
                             block h-12 w-full rounded-xl
-                            border border-slate-200 bg-slate-50
+                            border border-slate-200 bg-slate-50/80
                             py-3 pl-12 pr-4 text-sm text-slate-900
                             outline-none transition
                             placeholder:text-slate-400
@@ -86,7 +146,7 @@
         name="category"
         class="
             block h-12 w-full appearance-none rounded-xl
-            border border-slate-200 bg-slate-50
+            border border-slate-200 bg-slate-50/80
             py-3 pl-4 pr-14 text-sm text-slate-700
             outline-none transition
             hover:border-slate-300 hover:bg-white
@@ -146,10 +206,10 @@
                     class="
                         inline-flex h-12 min-w-0 flex-1
                         items-center justify-center gap-2
-                        rounded-xl bg-blue-600 px-5
+                        rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5
                         text-sm font-semibold text-white
-                        shadow-sm transition
-                        hover:bg-blue-700
+                        shadow-md shadow-blue-600/20 transition
+                        hover:-translate-y-0.5 hover:from-blue-700 hover:to-indigo-700
                         focus:outline-none focus:ring-4
                         focus:ring-blue-200
                     "
@@ -268,11 +328,23 @@
     @if ($experts->isEmpty())
         <div
             class="
-                rounded-2xl border border-dashed border-slate-300
-                bg-white px-6 py-16 text-center
+                rounded-3xl border border-dashed border-slate-300
+                bg-gradient-to-b from-white to-slate-50 px-6 py-20 text-center
             "
         >
-            <p class="text-lg font-semibold text-slate-700">
+            <div
+                class="
+                    mx-auto mb-4 flex h-14 w-14 items-center justify-center
+                    rounded-2xl bg-blue-50 text-blue-600
+                "
+            >
+                <svg class="h-7 w-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                    <circle cx="11" cy="11" r="7" />
+                    <path stroke-linecap="round" d="m20 20-4-4" />
+                </svg>
+            </div>
+
+            <p class="text-lg font-semibold text-slate-800">
                 ยังไม่มีข้อมูลผู้เชี่ยวชาญ
             </p>
 
@@ -283,24 +355,25 @@
     @else
         <div
             class="
-                grid auto-rows-fr items-stretch gap-6
+                grid auto-rows-fr items-stretch gap-5
                 sm:grid-cols-2 lg:grid-cols-3
             "
         >
             @foreach ($experts as $expert)
                 <article
                     class="
-                        group flex h-full min-h-[540px] flex-col
-                        overflow-hidden rounded-2xl
-                        border border-slate-200 bg-white
-                        shadow-sm transition duration-200
-                        hover:-translate-y-1 hover:shadow-lg
+                        group relative flex h-[500px] flex-col sm:h-[520px]
+                        overflow-hidden rounded-3xl
+                        border border-slate-200/80 bg-white
+                        shadow-sm transition duration-300
+                        hover:-translate-y-1.5 hover:border-blue-200
+                        hover:shadow-xl hover:shadow-blue-950/10
                     "
                 >
                     {{-- รูปผู้เชี่ยวชาญ --}}
                     <div
                         class="
-                            relative aspect-[4/3] w-full
+                            relative h-1/2 w-full
                             shrink-0 overflow-hidden bg-slate-100
                         "
                     >
@@ -312,61 +385,93 @@
                                 alt="{{ $expert->full_name }}"
                                 class="
                                     h-full w-full object-cover
-                                    transition duration-300
+                                    transition duration-500 ease-out
                                     group-hover:scale-105
                                 "
                             >
                         @else
                             <div
                                 class="
-                                    flex h-full w-full items-center
-                                    justify-center bg-slate-100
-                                    text-sm text-slate-400
+                                    flex h-full w-full flex-col items-center
+                                    justify-center bg-gradient-to-br
+                                    from-slate-100 to-blue-50
+                                    text-sm font-medium text-slate-400
                                 "
                             >
+                                <span
+                                    class="
+                                        mb-3 flex h-20 w-20 items-center
+                                        justify-center rounded-full
+                                        bg-white/80 text-3xl font-bold
+                                        text-blue-600 shadow-sm
+                                    "
+                                >
+                                    {{ mb_substr($expert->full_name, 0, 1) }}
+                                </span>
                                 ไม่มีรูปประจำตัว
                             </div>
                         @endif
+
+                        <div
+                            class="
+                                pointer-events-none absolute inset-x-0 bottom-0
+                                h-20 bg-gradient-to-t from-slate-950/35 to-transparent
+                                opacity-70 transition group-hover:opacity-100
+                            "
+                            aria-hidden="true"
+                        ></div>
                     </div>
 
                     {{-- เนื้อหาการ์ด --}}
-                    <div class="flex flex-1 flex-col p-5">
+                    <div
+                        class="
+                            flex h-1/2 min-h-0 flex-none flex-col
+                            overflow-hidden p-4 sm:p-5
+                        "
+                    >
                         {{-- ข้อมูลทั่วไป --}}
-                        <div class="min-h-[88px]">
+                        <div class="shrink-0">
                             <h2
                                 class="
-                                    line-clamp-2 text-xl font-bold
-                                    leading-7 text-slate-900
+                                    line-clamp-1 text-lg font-bold
+                                    leading-6 text-slate-900 transition
+                                    group-hover:text-blue-700
                                 "
                             >
                                 {{ $expert->full_name }}
                             </h2>
 
-                            <p
-                                class="
-                                    mt-1 truncate text-sm
-                                    font-medium text-slate-600
-                                "
-                            >
-                                {{ $expert->current_position
-                                    ?: 'ไม่ระบุตำแหน่ง' }}
-                            </p>
+                            <div class="mt-1.5 space-y-1">
+                                <p class="flex min-w-0 items-center gap-2 text-sm font-medium text-slate-600">
+                                    <svg class="h-4 w-4 shrink-0 text-blue-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 6h6m-7 4h8m-9 9h10a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2Z" />
+                                    </svg>
+                                    <span class="truncate">{{ $expert->current_position ?: 'ไม่ระบุตำแหน่ง' }}</span>
+                                </p>
 
-                            <p class="mt-1 truncate text-sm text-slate-500">
-                                {{ $expert->workplace
-                                    ?: 'ไม่ระบุสถานที่ทำงาน' }}
-                            </p>
+                                <p class="flex min-w-0 items-center gap-2 text-sm text-slate-500">
+                                    <svg class="h-4 w-4 shrink-0 text-slate-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 21s6-5.1 6-11a6 6 0 1 0-12 0c0 5.9 6 11 6 11Z" />
+                                        <circle cx="12" cy="10" r="2" />
+                                    </svg>
+                                    <span class="truncate">{{ $expert->workplace ?: 'ไม่ระบุสถานที่ทำงาน' }}</span>
+                                </p>
+                            </div>
                         </div>
 
                         {{-- หมวดและความเชี่ยวชาญอื่น ๆ --}}
                         <div
                             class="
-                                mt-4 flex min-h-[124px]
-                                flex-col gap-3
+                                mt-3 min-h-0 flex-1 overflow-hidden
                             "
                         >
                             @if ($expert->expertiseCategories->isNotEmpty())
-                                <div class="flex flex-wrap content-start gap-2">
+                                <div
+                                    class="
+                                        flex max-h-14 flex-wrap
+                                        content-start gap-1.5 overflow-hidden
+                                    "
+                                >
                                     @foreach (
                                         $expert->expertiseCategories
                                         as $category
@@ -374,7 +479,7 @@
                                         <span
                                             class="
                                                 inline-flex h-fit rounded-full
-                                                bg-blue-50 px-3 py-1
+                                                border border-blue-100 bg-blue-50/80 px-2.5 py-1
                                                 text-xs font-medium
                                                 text-blue-700
                                             "
@@ -396,8 +501,8 @@
                             )
                                 <p
                                     class="
-                                        line-clamp-2 text-sm
-                                        leading-6 text-slate-600
+                                        mt-2 line-clamp-1 text-xs
+                                        leading-5 text-slate-600
                                     "
                                 >
                                     <span class="font-semibold text-slate-700">
@@ -412,23 +517,35 @@
                         {{-- ล็อกปุ่มไว้ด้านล่าง --}}
                         <div
                             class="
-                                mt-auto border-t
-                                border-slate-100 pt-4
+                                mt-3 shrink-0 border-t
+                                border-slate-100 pt-3
                             "
                         >
                             <a
                                 href="{{ route('experts.show', $expert) }}"
                                 class="
-                                    inline-flex h-12 w-full
+                                    inline-flex h-10 w-full
                                     items-center justify-center
-                                    rounded-xl bg-blue-600 px-4
+                                    rounded-xl bg-slate-900 px-4
                                     text-sm font-semibold text-white
-                                    transition hover:bg-blue-700
+                                    gap-2 shadow-sm transition
+                                    hover:bg-blue-600 hover:shadow-md
                                     focus:outline-none focus:ring-4
                                     focus:ring-blue-200
                                 "
                             >
                                 ดูรายละเอียด
+
+                                <svg
+                                    class="h-4 w-4 transition-transform group-hover:translate-x-1"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="2"
+                                    aria-hidden="true"
+                                >
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m9 18 6-6-6-6" />
+                                </svg>
                             </a>
                         </div>
                     </div>
