@@ -16,6 +16,7 @@ class Expert extends Model
         'highest_education',
         'current_position',
         'expertise_details',
+        'other_expertise',
         'phone',
         'email',
         'line_id',
