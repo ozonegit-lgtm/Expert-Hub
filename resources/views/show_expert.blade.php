@@ -4,14 +4,13 @@
 
 @section('content')
     <div
-            class="
-                relative left-1/2 -mt-9 mb-8 flex min-h-[280px] w-screen
-                -translate-x-1/2 overflow-hidden
-                border-y border-white/10 bg-[#2D2AFF]
-                px-6 py-10 text-white
-                shadow-[inset_0_-40px_80px_rgba(0,0,80,0.12),0_12px_30px_rgba(15,23,42,0.12)]
-                sm:min-h-[340px] sm:px-10 sm:py-12
-            ">
+        class="
+            relative left-1/2 -mt-9 mb-8 flex w-screen
+            -translate-x-1/2 overflow-hidden bg-[#022ABE]
+            px-6 py-10 text-white
+            shadow-lg shadow-blue-950/15 sm:px-10 sm:py-14
+        "
+    >
         {{-- วงกลมตกแต่งมุมขวาบน --}}
         <div
             class="
@@ -42,7 +41,7 @@
         <div
             class="
                 relative z-10 flex w-full flex-col
-                items-center justify-center text-center
+                mx-auto max-w-7xl items-center justify-center text-center
             "
         >
             <h1
@@ -55,32 +54,16 @@
                 ค้นหาผู้เชี่ยวชาญที่ใช่สำหรับคุณ
             </h1>
 
-            <nav
-                class="mt-auto pt-12 text-sm font-medium text-white sm:text-base"
-                aria-label="Breadcrumb"
+            {{-- แถบค้นหาและกรองข้อมูล --}}
+            <form
+                method="GET"
+                action="{{ route('show-expert') }}"
+                class="
+                    relative z-10 mt-10 w-full rounded-2xl
+                    border border-white/30 bg-white p-3 text-left
+                    shadow-xl shadow-blue-950/20 sm:p-4
+                "
             >
-                <a
-                    href="{{ url('/') }}"
-                    class="transition hover:text-blue-200"
-                >
-                    หน้าหลัก
-                </a>
-
-                <span class="mx-2 text-white/70" aria-hidden="true">»</span>
-
-                <span>ผู้เชี่ยวชาญทั้งหมด</span>
-            </nav>
-        </div>
-    </div>
-    {{-- แถบค้นหาและกรองข้อมูล --}}
-    <form
-        method="GET"
-        action="{{ route('show-expert') }}"
-        class="
-            relative z-10 mb-8 rounded-2xl border border-slate-200/80
-            bg-white p-3 shadow-lg shadow-slate-200/50 sm:p-4
-        "
-    >
         <div
             class="
                 grid grid-cols-1 gap-3
@@ -204,14 +187,14 @@
                 <button
                     type="submit"
                     class="
-                        inline-flex h-12 min-w-0 flex-1
+                        inline-flex h-11 min-w-0 flex-1
                         items-center justify-center gap-2
-                        rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-5
+                        rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 px-4
                         text-sm font-semibold text-white
-                        shadow-md shadow-blue-600/20 transition
-                        hover:-translate-y-0.5 hover:from-blue-700 hover:to-indigo-700
+                        shadow-md shadow-emerald-600/20 transition
+                        hover:-translate-y-0.5 hover:from-emerald-700 hover:to-teal-700
                         focus:outline-none focus:ring-4
-                        focus:ring-blue-200
+                        focus:ring-emerald-200
                     "
                 >
                     <svg
@@ -323,7 +306,25 @@
                 @endif
             </div>
         @endif
-    </form>
+            </form>
+
+            <nav
+                class="mt-7 text-sm font-medium text-white sm:text-base"
+                aria-label="Breadcrumb"
+            >
+                <a
+                    href="{{ url('/') }}"
+                    class="transition hover:text-blue-200"
+                >
+                    หน้าหลัก
+                </a>
+
+                <span class="mx-2 text-white/70" aria-hidden="true">»</span>
+
+                <span>ผู้เชี่ยวชาญทั้งหมด</span>
+            </nav>
+        </div>
+    </div>
 
     @if ($experts->isEmpty())
         <div
