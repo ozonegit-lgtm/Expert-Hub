@@ -195,51 +195,322 @@
                 @enderror
             </div>
 
-            <div class="md:col-span-2">
+           {{-- รูปประจำตัว --}}
+            <div class="md:col-span-2 lg:col-span-3">
                 <label for="profile_image" class="{{ $labelClass }}">
                     รูปประจำตัว
                 </label>
 
-                <div class="mt-2 rounded-xl border-2 border-dashed border-slate-300 bg-slate-50 p-5">
-                    <input
-                        id="profile_image"
-                        name="profile_image"
-                        type="file"
-                        accept=".jpg,.jpeg,.png,.webp"
+                <p class="mt-1 text-xs text-slate-500">
+                    รองรับ JPG, PNG และ WEBP ขนาดไม่เกิน 10 MB
+                    สามารถปรับตำแหน่ง ย่อ ขยาย และหมุนรูปได้
+                </p>
+
+                <div
+                    class="
+                        mt-3 grid gap-5 rounded-2xl
+                        border-2 border-dashed border-slate-300
+                        bg-slate-50 p-5
+                        sm:grid-cols-[160px_1fr]
+                    "
+                >
+                    {{-- ตัวอย่างรูป --}}
+                    <div
                         class="
-                            block w-full text-sm text-slate-600
-                            file:mr-4 file:rounded-lg file:border-0
-                            file:bg-blue-600 file:px-4 file:py-2.5
-                            file:font-semibold file:text-white
-                            hover:file:bg-blue-700
+                            relative aspect-square overflow-hidden
+                            rounded-2xl border border-slate-200
+                            bg-white shadow-sm
                         "
                     >
+                        <img
+                            id="profile-image-preview"
+                            src="{{ isset($expert) && $expert->profile_image
+                                ? Storage::disk('public')->url($expert->profile_image)
+                                : '' }}"
+                            alt="ตัวอย่างรูปประจำตัว"
+                            class="
+                                {{ isset($expert) && $expert->profile_image
+                                    ? ''
+                                    : 'hidden' }}
+                                h-full w-full object-cover
+                            "
+                        >
 
-                    <p class="mt-3 text-xs text-slate-500">
-                        รองรับ JPG, PNG และ WEBP ขนาดไม่เกิน 2 MB
-                    </p>
-
-                    @if (isset($expert) && $expert->profile_image)
-                        <div class="mt-4 flex items-center gap-4">
-                            <img
-                                src="{{ Storage::url($expert->profile_image) }}"
-                                alt="{{ $expert->full_name }}"
-                                class="
-                                    h-24 w-24 rounded-xl border border-slate-200
-                                    object-cover shadow-sm
-                                "
+                        <div
+                            id="profile-image-placeholder"
+                            class="
+                                {{ isset($expert) && $expert->profile_image
+                                    ? 'hidden'
+                                    : '' }}
+                                absolute inset-0 flex flex-col
+                                items-center justify-center
+                                text-center text-slate-400
+                            "
+                        >
+                            <svg
+                                class="h-10 w-10"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="1.5"
+                                aria-hidden="true"
                             >
+                                <circle cx="12" cy="8" r="4" />
 
-                            <p class="text-sm text-slate-500">
-                                รูปประจำตัวปัจจุบัน
-                            </p>
+                                <path
+                                    stroke-linecap="round"
+                                    d="M4 21a8 8 0 0 1 16 0"
+                                />
+                            </svg>
+
+                            <span class="mt-2 text-xs">
+                                ยังไม่ได้เลือกรูป
+                            </span>
                         </div>
-                    @endif
+                    </div>
+
+                    {{-- ส่วนเลือกไฟล์ --}}
+                    <div class="flex flex-col justify-center">
+                        <input
+                            id="profile_image"
+                            name="profile_image"
+                            type="file"
+                            accept=".jpg,.jpeg,.png,.webp,image/jpeg,image/png,image/webp"
+                            class="sr-only"
+                        >
+
+                        <label
+                            for="profile_image"
+                            class="
+                                inline-flex w-fit cursor-pointer
+                                items-center justify-center gap-2
+                                rounded-xl bg-blue-600 px-5 py-3
+                                text-sm font-semibold text-white
+                                shadow-sm transition hover:bg-blue-700
+                                focus-within:ring-4 focus-within:ring-blue-100
+                            "
+                        >
+                            <svg
+                                class="h-4 w-4"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M12 16V4m0 0-4 4m4-4 4 4"
+                                />
+
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M4 15v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4"
+                                />
+                            </svg>
+
+                            เลือกรูปภาพ
+                        </label>
+
+                        <p
+                            id="profile-image-name"
+                            class="mt-3 break-all text-sm text-slate-500"
+                        >
+                            @if (isset($expert) && $expert->profile_image)
+                                มีรูปประจำตัวอยู่แล้ว
+                            @else
+                                ยังไม่ได้เลือกไฟล์
+                            @endif
+                        </p>
+
+                        <button
+                            id="profile-image-edit"
+                            type="button"
+                            class="
+                                mt-3 hidden w-fit text-sm
+                                font-semibold text-blue-600
+                                transition hover:text-blue-700
+                            "
+                        >
+                            ปรับตำแหน่งรูปอีกครั้ง
+                        </button>
+                    </div>
                 </div>
 
                 @error('profile_image')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                    <p class="mt-2 text-sm text-red-600">
+                        {{ $message }}
+                    </p>
                 @enderror
+            </div>
+
+            {{-- หน้าต่าง Crop รูป --}}
+            <div
+                id="image-crop-modal"
+                class="
+                    fixed inset-0 z-[200] hidden
+                    items-center justify-center
+                    bg-slate-950/70 p-4 backdrop-blur-sm
+                "
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="image-crop-title"
+            >
+                <div
+                    class="
+                        flex max-h-[calc(100vh-2rem)] w-full
+                        max-w-3xl flex-col overflow-hidden
+                        rounded-3xl bg-white shadow-2xl
+                    "
+                >
+                    {{-- หัว Modal --}}
+                    <div
+                        class="
+                            flex items-center justify-between
+                            border-b border-slate-200 px-5 py-4
+                        "
+                    >
+                        <div>
+                            <h2
+                                id="image-crop-title"
+                                class="font-bold text-slate-900"
+                            >
+                                ปรับรูปประจำตัว
+                            </h2>
+
+                            <p class="mt-1 text-sm text-slate-500">
+                                ลากรูปและย่อหรือขยายเพื่อเลือกบริเวณที่ต้องการ
+                            </p>
+                        </div>
+
+                        <button
+                            id="image-crop-close"
+                            type="button"
+                            class="
+                                inline-flex h-10 w-10 items-center
+                                justify-center rounded-xl text-slate-400
+                                transition hover:bg-slate-100
+                                hover:text-slate-700
+                            "
+                            aria-label="ปิดหน้าต่าง"
+                        >
+                            <svg
+                                class="h-5 w-5"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                stroke-width="2"
+                                aria-hidden="true"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    d="M6 6l12 12M18 6 6 18"
+                                />
+                            </svg>
+                        </button>
+                    </div>
+
+                    {{-- พื้นที่ Crop --}}
+                    <div class="min-h-0 flex-1 overflow-auto bg-slate-900 p-4">
+                        <div class="mx-auto max-h-[60vh] max-w-2xl">
+                            <img
+                                id="image-crop-source"
+                                src=""
+                                alt="รูปสำหรับปรับตำแหน่ง"
+                                class="block max-h-[60vh] max-w-full"
+                            >
+                        </div>
+                    </div>
+
+                    {{-- ปุ่มควบคุม --}}
+                    <div
+                        class="
+                            flex flex-col gap-3 border-t
+                            border-slate-200 px-5 py-4
+                            sm:flex-row sm:items-center
+                            sm:justify-between
+                        "
+                    >
+                        <div class="flex items-center gap-2">
+                            <button
+                                id="image-crop-zoom-out"
+                                type="button"
+                                class="
+                                    inline-flex h-10 w-10 items-center
+                                    justify-center rounded-xl border
+                                    border-slate-300 bg-white text-lg
+                                    font-bold text-slate-700
+                                    transition hover:bg-slate-50
+                                "
+                                aria-label="ย่อรูป"
+                            >
+                                −
+                            </button>
+
+                            <button
+                                id="image-crop-zoom-in"
+                                type="button"
+                                class="
+                                    inline-flex h-10 w-10 items-center
+                                    justify-center rounded-xl border
+                                    border-slate-300 bg-white text-lg
+                                    font-bold text-slate-700
+                                    transition hover:bg-slate-50
+                                "
+                                aria-label="ขยายรูป"
+                            >
+                                +
+                            </button>
+
+                            <button
+                                id="image-crop-rotate"
+                                type="button"
+                                class="
+                                    inline-flex h-10 items-center
+                                    justify-center rounded-xl border
+                                    border-slate-300 bg-white px-4
+                                    text-sm font-semibold text-slate-700
+                                    transition hover:bg-slate-50
+                                "
+                            >
+                                หมุนรูป
+                            </button>
+                        </div>
+
+                        <div class="flex gap-2">
+                            <button
+                                id="image-crop-cancel"
+                                type="button"
+                                class="
+                                    inline-flex h-10 flex-1 items-center
+                                    justify-center rounded-xl border
+                                    border-slate-300 bg-white px-5
+                                    text-sm font-semibold text-slate-700
+                                    transition hover:bg-slate-50
+                                    sm:flex-none
+                                "
+                            >
+                                ยกเลิก
+                            </button>
+
+                            <button
+                                id="image-crop-apply"
+                                type="button"
+                                class="
+                                    inline-flex h-10 flex-1 items-center
+                                    justify-center rounded-xl bg-blue-600
+                                    px-5 text-sm font-semibold text-white
+                                    transition hover:bg-blue-700
+                                    sm:flex-none
+                                "
+                            >
+                                ใช้รูปนี้
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>

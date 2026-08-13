@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+                        
 
 class ExpertController extends Controller
 {
@@ -63,6 +64,16 @@ class ExpertController extends Controller
                                     'other_expertise',
                                     'like',
                                     "%{$search}%"
+                                )
+                                ->orWhereHas(
+                                    'expertiseCategories',
+                                    function ($categoryQuery) use ($search) {
+                                        $categoryQuery->where(
+                                            'name',
+                                            'like',
+                                            "%{$search}%"
+                                        );
+                                    }
                                 );
                         }
                     );
@@ -274,16 +285,94 @@ class ExpertController extends Controller
             );
     }
     
-    public function showExperts(): View
-    {
-        $experts = Expert::query()
-            ->with('expertiseCategories')
-            ->where('is_published', true)
-            ->latest()
-            ->paginate(12);
+        public function showExperts(Request $request): View
+        {
+            $search = trim(
+                $request->string('search')->toString()
+            );
 
-        return view('show_expert', compact('experts'));
-    }
+            $categoryId = $request->integer('category');
+
+            $experts = Expert::query()
+                ->with('expertiseCategories')
+
+                // หน้าสาธารณะแสดงเฉพาะข้อมูลที่เผยแพร่
+                ->where('is_published', true)
+
+                // ค้นหาด้วยข้อความ
+                ->when(
+                    $search !== '',
+                    function ($query) use ($search) {
+                        $query->where(
+                            function ($query) use ($search) {
+                                $query
+                                    ->where(
+                                        'full_name',
+                                        'like',
+                                        "%{$search}%"
+                                    )
+                                    ->orWhere(
+                                        'current_position',
+                                        'like',
+                                        "%{$search}%"
+                                    )
+                                    ->orWhere(
+                                        'workplace',
+                                        'like',
+                                        "%{$search}%"
+                                    )
+                                    ->orWhere(
+                                        'highest_education',
+                                        'like',
+                                        "%{$search}%"
+                                    )
+                                    ->orWhere(
+                                        'expertise_details',
+                                        'like',
+                                        "%{$search}%"
+                                    )
+                                    ->orWhere(
+                                        'other_expertise',
+                                        'like',
+                                        "%{$search}%"
+                                    )
+                                    ->orWhereHas(
+                                        'expertiseCategories',
+                                        fn ($categoryQuery) => $categoryQuery
+                                            ->where(
+                                                'name',
+                                                'like',
+                                                "%{$search}%"
+                                            )
+                                    );
+                            }
+                        );
+                    }
+                )
+
+                // กรองตามหมวด
+                ->when(
+                    $categoryId > 0,
+                    fn ($query) => $query->whereHas(
+                        'expertiseCategories',
+                        fn ($categoryQuery) => $categoryQuery
+                            ->whereKey($categoryId)
+                    )
+                )
+                ->latest()
+                ->paginate(12)
+                ->withQueryString();
+
+            $categories = ExpertiseCategory::query()
+                ->where('is_active', true)
+                ->orderBy('name')
+                ->get();
+
+            return view(
+                'show_expert',
+                compact('experts', 'categories')
+            );
+        }
 
     /**
      * ตรวจว่ารายการหมวดมีหมวด "อื่นๆ" หรือไม่

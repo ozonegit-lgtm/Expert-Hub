@@ -37,85 +37,97 @@
         @endauth
     </section>
 
-    {{-- ตัวกรอง --}}
-    <form
-        method="GET"
-        action="{{ route('experts.index') }}"
+{{-- ตัวกรอง: คงชื่อ field และการทำงานเดิม --}}
+<form
+    method="GET"
+    action="{{ route('experts.index') }}"
+    class="
+        mb-8 rounded-2xl border border-slate-200
+        bg-white p-4 shadow-sm
+    "
+>
+    <div
         class="
-            mb-8 rounded-2xl border border-slate-200
-            bg-white p-5 shadow-sm sm:p-6
+            grid grid-cols-1 gap-3
+            md:grid-cols-[minmax(0,1fr)_300px_auto]
+            md:items-end
         "
     >
-        <div class="grid gap-5 md:grid-cols-2">
-            <div>
-                <label
-                    for="search"
-                    class="block text-sm font-semibold text-slate-700"
-                >
-                    ค้นหา
-                </label>
+        {{-- ค้นหา --}}
+        <div class="min-w-0">
+            <label
+                for="search"
+                class="mb-2 block text-sm font-semibold text-slate-700"
+            >
+                ค้นหา
+            </label>
 
-                <input
-                    id="search"
-                    name="search"
-                    type="search"
-                    value="{{ request('search') }}"
-                    placeholder="ชื่อ ตำแหน่ง หรือสถานที่ทำงาน"
-                    class="
-                        mt-2 block w-full rounded-xl border
-                        border-slate-300 bg-white px-4 py-3
-                        text-sm text-slate-900 shadow-sm outline-none
-                        transition placeholder:text-slate-400
-                        focus:border-blue-500 focus:ring-4
-                        focus:ring-blue-100
-                    "
-                >
-            </div>
-
-            <div>
-                <label
-                    for="category"
-                    class="block text-sm font-semibold text-slate-700"
-                >
-                    หมวดความเชี่ยวชาญ
-                </label>
-
-                <select
-                    id="category"
-                    name="category"
-                    class="
-                        mt-2 block w-full rounded-xl border
-                        border-slate-300 bg-white px-4 py-3
-                        text-sm text-slate-900 shadow-sm outline-none
-                        transition focus:border-blue-500
-                        focus:ring-4 focus:ring-blue-100
-                    "
-                >
-                    <option value="">ทุกหมวด</option>
-
-                    @foreach ($categories as $category)
-                        <option
-                            value="{{ $category->id }}"
-                            @selected(
-                                (string) request('category')
-                                === (string) $category->id
-                            )
-                        >
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+            <input
+                id="search"
+                name="search"
+                type="search"
+                value="{{ request('search') }}"
+                placeholder="ชื่อ ตำแหน่ง หรือสถานที่ทำงาน"
+                class="
+                    block h-12 w-full rounded-xl
+                    border border-slate-300 bg-white
+                    px-4 text-sm text-slate-900
+                    outline-none transition
+                    placeholder:text-slate-400
+                    focus:border-blue-500
+                    focus:ring-4 focus:ring-blue-100
+                "
+            >
         </div>
 
-        <div class="mt-5 flex flex-wrap items-center gap-3">
+        {{-- หมวดความเชี่ยวชาญ --}}
+        <div class="min-w-0">
+            <label
+                for="category"
+                class="mb-2 block text-sm font-semibold text-slate-700"
+            >
+                หมวดความเชี่ยวชาญ
+            </label>
+
+            <select
+                id="category"
+                name="category"
+                class="
+                    block h-12 w-full rounded-xl
+                    border border-slate-300 bg-white
+                    px-4 text-sm text-slate-900
+                    outline-none transition
+                    focus:border-blue-500
+                    focus:ring-4 focus:ring-blue-100
+                "
+            >
+                <option value="">ทุกหมวด</option>
+
+                @foreach ($categories as $category)
+                    <option
+                        value="{{ $category->id }}"
+                        @selected(
+                            (string) request('category')
+                            === (string) $category->id
+                        )
+                    >
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+
+        {{-- ปุ่ม --}}
+        <div class="flex gap-2">
             <button
                 type="submit"
                 class="
-                    inline-flex items-center justify-center rounded-xl
-                    bg-blue-600 px-5 py-2.5 text-sm font-semibold
-                    text-white shadow-sm transition hover:bg-blue-700
-                    focus:outline-none focus:ring-4 focus:ring-blue-200
+                    inline-flex h-12 flex-1 items-center
+                    justify-center rounded-xl bg-blue-600
+                    px-6 text-sm font-semibold text-white
+                    shadow-sm transition hover:bg-blue-700
+                    focus:outline-none focus:ring-4
+                    focus:ring-blue-200 md:flex-none
                 "
             >
                 ค้นหา
@@ -124,16 +136,19 @@
             <a
                 href="{{ route('experts.index') }}"
                 class="
-                    inline-flex items-center justify-center rounded-xl
-                    border border-slate-300 bg-white px-5 py-2.5
-                    text-sm font-semibold text-slate-700 shadow-sm
+                    inline-flex h-12 items-center
+                    justify-center rounded-xl
+                    border border-slate-300 bg-white
+                    px-4 text-sm font-semibold text-slate-600
                     transition hover:bg-slate-50
+                    hover:text-slate-900
                 "
             >
-                ล้างตัวกรอง
+                ล้าง
             </a>
         </div>
-    </form>
+    </div>
+</form>
 
     @if ($experts->isEmpty())
         {{-- ไม่พบข้อมูล --}}
@@ -178,16 +193,16 @@
         </section>
     @else
         {{-- รายการผู้เชี่ยวชาญ --}}
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid auto-rows-fr items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ($experts as $expert)
-                <article
-                    class="
-                        group flex flex-col overflow-hidden rounded-2xl
-                        border border-slate-200 bg-white shadow-sm
-                        transition duration-200 hover:-translate-y-1
-                        hover:shadow-lg
-                    "
-                >
+            <article
+                class="
+                    group relative flex h-full min-h-[560px] flex-col
+                    overflow-hidden rounded-2xl border border-slate-200
+                    bg-white shadow-sm transition duration-200
+                    hover:-translate-y-1 hover:shadow-lg
+                "
+            >
                     {{-- รูปประจำตัว --}}
                     <div class="relative h-52 overflow-hidden bg-slate-100">
                         @if ($expert->profile_image)
@@ -240,7 +255,7 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-1 flex-col p-5">
+                    <div class="flex flex-1 flex-col p-5 pb-[88px]">
                         <h2 class="text-lg font-bold text-slate-900">
                             {{ $expert->full_name }}
                         </h2>
@@ -277,10 +292,9 @@
                         {{-- ปุ่มดำเนินการ --}}
                         <div
                             class="
-                                mt-6 flex flex-wrap items-center gap-2
-                                border-t border-slate-100 pt-4
-                            "
-                        >
+                                absolute bottom-5 left-5 right-5
+                                flex items-center gap-2
+                                border-t border-slate-100 bg-white pt-4 ">
                             <a
                                 href="{{ route('experts.show', $expert) }}"
                                 class="
