@@ -1,42 +1,38 @@
-<header
-    class="
-        sticky top-0 z-40 border-b border-slate-200
-        bg-white/95 shadow-sm backdrop-blur
-    "
->
+<header class="sticky top-0 z-40 w-full">
     <nav
         class="
-            mx-auto flex h-16 w-full max-w-6xl
-            items-center justify-between gap-4 px-4
+            flex min-h-16 w-full
+            items-center justify-between
+            border-b border-slate-200
+            bg-white px-5
+            shadow-sm
         "
     >
+
         {{-- Logo --}}
         <a
             href="{{ route('show-expert') }}"
-            class="
-                group flex min-w-0 shrink-0 items-center
-                gap-3 rounded-xl focus:outline-none
-                focus:ring-4 focus:ring-blue-100
-            "
+            class="group flex shrink-0 items-center gap-3"
         >
             <span
                 class="
-                    flex h-10 w-10 shrink-0 items-center
-                    justify-center rounded-xl bg-gradient-to-br
-                    from-blue-600 to-indigo-600 text-lg
-                    font-bold text-white shadow-sm
-                    transition duration-200
-                    group-hover:scale-105
+                    flex h-9 w-9 shrink-0
+                    items-center justify-center
+                    rounded-lg bg-blue-600
+                    text-lg font-bold text-white
+                    shadow-sm transition
+                    group-hover:bg-blue-700
                 "
             >
                 E
             </span>
 
-            <span class="hidden min-w-0 sm:block">
+            <span class="hidden sm:block">
                 <span
                     class="
-                        block truncate text-base font-bold
-                        leading-5 tracking-tight text-slate-900
+                        block text-sm font-bold
+                        leading-4 tracking-tight
+                        text-slate-900
                     "
                 >
                     Expert Hub
@@ -44,8 +40,9 @@
 
                 <span
                     class="
-                        block truncate text-xs
-                        leading-4 text-slate-500
+                        block text-[11px]
+                        leading-4
+                        text-slate-500
                     "
                 >
                     ระบบข้อมูลผู้เชี่ยวชาญ
@@ -53,134 +50,197 @@
             </span>
         </a>
 
-        {{-- เมนูด้านขวา --}}
-        <div class="flex min-w-0 items-center gap-1 sm:gap-2">
+
+        {{-- เมนู --}}
+        <div class="flex items-center gap-1 sm:gap-2">
+
             @auth
+
                 @if (auth()->user()->is_admin)
-                    {{-- Admin: หน้าเว็บไซต์ --}}
+
+                    {{-- หน้าเว็บไซต์ --}}
                     <a
                         href="{{ route('show-expert') }}"
                         class="
-                            hidden h-10 items-center justify-center
-                            gap-2 rounded-xl px-3 text-sm
-                            font-medium transition sm:inline-flex
+                            hidden items-center gap-2
+                            rounded-lg px-3 py-2
+                            text-sm font-medium
+                            transition
+                            sm:inline-flex
                             {{ request()->routeIs('show-expert')
                                 ? 'bg-blue-50 text-blue-700'
-                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                                : 'text-slate-600 hover:bg-slate-50 hover:text-blue-700'
                             }}
                         "
                     >
+                        {{-- Home Icon --}}
                         <svg
-                            class="h-4 w-4"
-                            viewBox="0 0 24 24"
+                            class="h-4 w-4 shrink-0"
                             fill="none"
+                            viewBox="0 0 24 24"
                             stroke="currentColor"
-                            stroke-width="2"
-                            aria-hidden="true"
+                            stroke-width="1.8"
                         >
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                d="M3 11.5 12 4l9 7.5"
-                            />
-
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                d="M5 10v10h14V10M9 20v-6h6v6"
+                                d="m2.25 12 9.204-7.054a.75.75 0 0 1 .914 0L21.75 12M4.5 10.5v8.25a.75.75 0 0 0 .75.75h4.5v-5.25h3v5.25h4.5a.75.75 0 0 0 .75-.75V10.5"
                             />
                         </svg>
 
-                        หน้าเว็บไซต์
+                        <span>หน้าเว็บไซต์</span>
                     </a>
 
-                    {{-- Admin: จัดการข้อมูล --}}
+
+                    {{-- จัดการข้อมูล --}}
                     <a
                         href="{{ route('experts.index') }}"
                         class="
-                            inline-flex h-10 items-center justify-center
-                            gap-2 rounded-xl px-3 text-sm
-                            font-medium transition
-                            {{ request()->routeIs(
-                                'experts.index',
-                                'experts.edit'
-                            )
-                                ? 'bg-blue-50 text-blue-700'
-                                : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                            hidden items-center gap-2
+                            rounded-lg px-3 py-2
+                            text-sm font-medium
+                            transition
+                            md:inline-flex
+                            {{ request()->routeIs('experts.index')
+                                || request()->routeIs('experts.show')
+                                || request()->routeIs('experts.edit')
+                                    ? 'bg-blue-50 text-blue-700'
+                                    : 'text-slate-600 hover:bg-slate-50 hover:text-blue-700'
                             }}
                         "
                     >
+                        {{-- Users/Database Icon --}}
                         <svg
-                            class="h-4 w-4"
-                            viewBox="0 0 24 24"
+                            class="h-4 w-4 shrink-0"
                             fill="none"
+                            viewBox="0 0 24 24"
                             stroke="currentColor"
-                            stroke-width="2"
-                            aria-hidden="true"
+                            stroke-width="1.8"
                         >
                             <path
                                 stroke-linecap="round"
                                 stroke-linejoin="round"
-                                d="M4 6h16M4 12h16M4 18h16"
+                                d="M12 6.75c4.142 0 7.5-1.007 7.5-2.25S16.142 2.25 12 2.25 4.5 3.257 4.5 4.5 7.858 6.75 12 6.75Z"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M4.5 4.5v7.5c0 1.243 3.358 2.25 7.5 2.25s7.5-1.007 7.5-2.25V4.5"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M4.5 12v7.5c0 1.243 3.358 2.25 7.5 2.25s7.5-1.007 7.5-2.25V12"
                             />
                         </svg>
 
-                        <span class="hidden sm:inline">
-                            จัดการข้อมูล
-                        </span>
-
-                        <span class="sm:hidden">
-                            จัดการ
-                        </span>
+                        <span>จัดการข้อมูล</span>
                     </a>
 
 
-
-                    {{-- Admin: เพิ่มผู้เชี่ยวชาญ --}}
+                    {{-- เพิ่มผู้เชี่ยวชาญ --}}
                     <a
                         href="{{ route('experts.create') }}"
                         class="
-                            inline-flex h-10 shrink-0 items-center
-                            justify-center gap-2 rounded-xl
-                            bg-blue-600 px-3 text-sm font-semibold
-                            text-white shadow-sm transition
-                            hover:bg-blue-700 hover:shadow
-                            focus:outline-none focus:ring-4
-                            focus:ring-blue-100
+                            hidden items-center gap-2
+                            rounded-lg px-3 py-2
+                            text-sm font-medium
+                            transition
+                            lg:inline-flex
+                            {{ request()->routeIs('experts.create')
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-slate-600 hover:bg-slate-50 hover:text-blue-700'
+                            }}
                         "
                     >
+                        {{-- User Plus Icon --}}
                         <svg
-                            class="h-4 w-4"
-                            viewBox="0 0 24 24"
+                            class="h-4 w-4 shrink-0"
                             fill="none"
+                            viewBox="0 0 24 24"
                             stroke="currentColor"
-                            stroke-width="2.5"
-                            aria-hidden="true"
+                            stroke-width="1.8"
                         >
                             <path
                                 stroke-linecap="round"
-                                d="M12 5v14M5 12h14"
+                                stroke-linejoin="round"
+                                d="M15 19.5a6.75 6.75 0 0 0-13.5 0"
+                            />
+                            <circle
+                                cx="8.25"
+                                cy="8.25"
+                                r="3.75"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M19 8.25v6.5M22.25 11.5h-6.5"
                             />
                         </svg>
 
-                        <span class="hidden md:inline">
-                            เพิ่มผู้เชี่ยวชาญ
-                        </span>
-
-                        <span class="md:hidden">
-                            เพิ่ม
-                        </span>
+                        <span>เพิ่มผู้เชี่ยวชาญ</span>
                     </a>
-                        {{-- เส้นแบ่ง --}}
-                        <span
-                            class="
-                                mx-1 hidden h-6 w-px
-                                bg-slate-200 md:block
-                            "
-                            aria-hidden="true"
+
+
+                    {{-- จัดการสมาชิก --}}
+                    <a
+                        href="{{ route('users.index') }}"
+                        class="
+                            hidden items-center gap-2
+                            rounded-lg px-3 py-2
+                            text-sm font-medium
+                            transition
+                            md:inline-flex
+                            {{ request()->routeIs('users.*')
+                                ? 'bg-blue-50 text-blue-700'
+                                : 'text-slate-600 hover:bg-slate-50 hover:text-blue-700'
+                            }}
+                        "
+                    >
+                        {{-- Users Icon --}}
+                        <svg
+                            class="h-4 w-4 shrink-0"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="1.8"
                         >
-                        </span>
-                    {{-- Admin: ออกจากระบบ --}}
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15 19.5a6.75 6.75 0 0 0-13.5 0"
+                            />
+                            <circle
+                                cx="8.25"
+                                cy="8.25"
+                                r="3.75"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M17.25 11.25a3 3 0 1 0 0-6M21.75 19.5a6.75 6.75 0 0 0-5.25-6.56"
+                            />
+                        </svg>
+
+                        <span>จัดการสมาชิก</span>
+                    </a>
+
+
+                    {{-- ปุ่มเพิ่มผู้เชี่ยวชาญ --}}
+                    
+
+
+                    {{-- เส้นแบ่ง --}}
+                    <span
+                        class="
+                            mx-1 hidden h-6 w-px
+                            bg-slate-200
+                            lg:block
+                        "
+                    ></span>
+
+
+                    {{-- Logout --}}
                     <form
                         method="POST"
                         action="{{ route('logout') }}"
@@ -190,153 +250,235 @@
 
                         <button
                             type="submit"
-                            title="ออกจากระบบ"
                             class="
-                                inline-flex h-10 items-center
-                                justify-center gap-2 rounded-xl
-                                px-3 text-sm font-medium
-                                text-slate-500 transition
-                                hover:bg-red-50 hover:text-red-600
-                                focus:outline-none focus:ring-4
-                                focus:ring-red-100
+                                inline-flex items-center gap-1.5
+                                rounded-lg px-2.5 py-2
+                                text-sm font-medium
+                                text-slate-500
+                                transition
+                                hover:bg-red-50
+                                hover:text-red-600
                             "
+                            title="ออกจากระบบ"
                         >
+                            {{-- Logout Icon --}}
                             <svg
                                 class="h-4 w-4"
-                                viewBox="0 0 24 24"
                                 fill="none"
+                                viewBox="0 0 24 24"
                                 stroke="currentColor"
-                                stroke-width="2"
-                                aria-hidden="true"
+                                stroke-width="1.8"
                             >
                                 <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    d="M10 17l5-5-5-5M15 12H3"
+                                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15"
                                 />
-
                                 <path
                                     stroke-linecap="round"
                                     stroke-linejoin="round"
-                                    d="M14 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"
+                                    d="M18 8.25 21.75 12 18 15.75M21.75 12H9"
                                 />
                             </svg>
 
                             <span class="hidden lg:inline">
                                 ออกจากระบบ
                             </span>
+
+                            <span class="lg:hidden">
+                                ออก
+                            </span>
                         </button>
                     </form>
+
                 @else
-                    {{-- User ที่ Login แล้ว --}}
+
+                    {{-- User --}}
                     <a
                         href="{{ route('show-expert') }}"
                         class="
-                            inline-flex h-10 items-center
-                            justify-center rounded-xl bg-blue-50
-                            px-3 text-sm font-medium text-blue-700
+                            inline-flex items-center gap-2
+                            rounded-lg px-3 py-2
+                            text-sm font-medium
+                            text-slate-600
+                            transition
+                            hover:bg-slate-50
+                            hover:text-blue-700
                         "
                     >
-                        ผู้เชี่ยวชาญ
+                        {{-- Users Icon --}}
+                        <svg
+                            class="h-4 w-4"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                            stroke-width="1.8"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M15 19.5a6.75 6.75 0 0 0-13.5 0"
+                            />
+                            <circle
+                                cx="8.25"
+                                cy="8.25"
+                                r="3.75"
+                            />
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M17.25 11.25a3 3 0 1 0 0-6M21.75 19.5a6.75 6.75 0 0 0-5.25-6.56"
+                            />
+                        </svg>
+
+                        <span>ผู้เชี่ยวชาญ</span>
                     </a>
 
                     <span
                         class="
-                            hidden max-w-36 truncate px-2
-                            text-sm font-medium text-slate-600
+                            hidden max-w-36 truncate
+                            px-2 text-sm
+                            text-slate-500
                             md:block
                         "
                     >
                         {{ auth()->user()->name }}
                     </span>
 
-                    <form method="POST" action="{{ route('logout') }}">
+                    <form
+                        method="POST"
+                        action="{{ route('logout') }}"
+                    >
                         @csrf
 
                         <button
                             type="submit"
                             class="
-                                inline-flex h-10 items-center
-                                justify-center rounded-xl px-3
-                                text-sm font-medium text-slate-500
-                                transition hover:bg-red-50
+                                inline-flex items-center gap-2
+                                rounded-lg px-3 py-2
+                                text-sm font-medium
+                                text-slate-500
+                                transition
+                                hover:bg-red-50
                                 hover:text-red-600
                             "
                         >
-                            ออกจากระบบ
+                            {{-- Logout Icon --}}
+                            <svg
+                                class="h-4 w-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15"
+                                />
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M18 8.25 21.75 12 18 15.75M21.75 12H9"
+                                />
+                            </svg>
+
+                            <span>ออกจากระบบ</span>
                         </button>
                     </form>
+
                 @endif
+
             @else
+
                 {{-- ผู้ใช้งานทั่วไป --}}
                 <a
                     href="{{ route('show-expert') }}"
                     class="
-                        inline-flex h-10 items-center justify-center
-                        gap-2 rounded-xl bg-blue-50 px-3
-                        text-sm font-medium text-blue-700
+                        hidden items-center gap-2
+                        rounded-lg px-3 py-2
+                        text-sm font-medium
+                        text-slate-600
+                        transition
+                        hover:bg-slate-50
+                        hover:text-blue-700
+                        sm:inline-flex
                     "
                 >
+                    {{-- Users Icon --}}
                     <svg
                         class="h-4 w-4"
-                        viewBox="0 0 24 24"
                         fill="none"
+                        viewBox="0 0 24 24"
                         stroke="currentColor"
-                        stroke-width="2"
-                        aria-hidden="true"
+                        stroke-width="1.8"
                     >
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+                            d="M15 19.5a6.75 6.75 0 0 0-13.5 0"
                         />
-
-                        <circle cx="9" cy="7" r="4" />
-
+                        <circle
+                            cx="8.25"
+                            cy="8.25"
+                            r="3.75"
+                        />
                         <path
                             stroke-linecap="round"
-                            d="M19 8v6M22 11h-6"
+                            stroke-linejoin="round"
+                            d="M17.25 11.25a3 3 0 1 0 0-6M21.75 19.5a6.75 6.75 0 0 0-5.25-6.56"
                         />
                     </svg>
 
-                    <span class="hidden sm:inline">
-                        ผู้เชี่ยวชาญ
-                    </span>
-
-                    <span class="sm:hidden">
-                        รายชื่อ
-                    </span>
+                    <span>ผู้เชี่ยวชาญ</span>
                 </a>
 
+
+                {{-- Login --}}
                 <a
                     href="{{ route('login') }}"
                     class="
-                        inline-flex h-10 items-center justify-center
-                        gap-2 rounded-xl bg-slate-900 px-4
-                        text-sm font-semibold text-white
-                        shadow-sm transition hover:bg-slate-800
-                        focus:outline-none focus:ring-4
-                        focus:ring-slate-200
+                        ml-1 inline-flex
+                        items-center justify-center gap-2
+                        rounded-full
+                        bg-blue-600
+                        px-4 py-2
+                        text-sm font-semibold
+                        text-white
+                        transition
+                        hover:bg-blue-700
+                        focus:outline-none
+                        focus:ring-2
+                        focus:ring-blue-400
+                        focus:ring-offset-2
+                        focus:ring-offset-white
                     "
                 >
+                    {{-- Login Icon --}}
                     <svg
                         class="h-4 w-4"
-                        viewBox="0 0 24 24"
                         fill="none"
+                        viewBox="0 0 24 24"
                         stroke="currentColor"
-                        stroke-width="2"
-                        aria-hidden="true"
+                        stroke-width="1.8"
                     >
                         <path
                             stroke-linecap="round"
                             stroke-linejoin="round"
-                            d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"
+                            d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6A2.25 2.25 0 0 0 5.25 5.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15"
+                        />
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M18 8.25 21.75 12 18 15.75M21.75 12H9"
                         />
                     </svg>
 
-                    เข้าสู่ระบบ
+                    <span>เข้าสู่ระบบ</span>
                 </a>
+
             @endauth
+
         </div>
     </nav>
 </header>
