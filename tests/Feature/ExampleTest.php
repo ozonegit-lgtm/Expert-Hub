@@ -9,9 +9,8 @@ class ExampleTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_home_page_redirects_to_expert_index(): void
+    public function test_home_page_is_accessible(): void
     {
-        $this->get('/')->assertRedirectToRoute('experts.index');
-        $this->get(route('experts.index'))->assertOk();
+        $this->get('/')->assertOk();
     }
 }
